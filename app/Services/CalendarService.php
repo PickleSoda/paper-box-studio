@@ -8,6 +8,7 @@ class CalendarService
 {
     public function generateCalendarDataForMonth($date)
     {
+        $date = new \Carbon\Carbon($date);
         $calendarData = [];
         $timeRange = (new TimeService)->generateTimeRange(config('app.calendar.start_time'), config('app.calendar.end_time'));
         $bookings = Booking::whereYear('start_time', $date->year)
@@ -27,10 +28,11 @@ class CalendarService
                     array_push($calendarData[$timeText], [
                         'rowspan' => $booking->difference / 30 ?? ''
                     ]);
-                } else if (!$bookings->where('start_time', $date->year . '-' . $date->month . '-' . $day)
-                    ->where('start_time', '<', $time['start'])
-                    ->where('end_time', '>=', $time['end'])
-                    ->count()
+                } else if (
+                    !$bookings->where('start_time', $date->year . '-' . $date->month . '-' . $day)
+                        ->where('start_time', '<', $time['start'])
+                        ->where('end_time', '>=', $time['end'])
+                        ->count()
                 ) {
                     array_push($calendarData[$timeText], 1);
                 } else {
@@ -40,5 +42,11 @@ class CalendarService
         }
 
         return $calendarData;
+    }
+    public function getBookingsAfterCurrentDate()
+    {
+        $currentDate = now();
+        $bookings = Booking::where('start_time', '>', $currentDate)->get();
+        return $bookings;
     }
 }
