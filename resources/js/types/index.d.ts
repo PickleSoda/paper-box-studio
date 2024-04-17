@@ -14,8 +14,8 @@ export type PageProps<
 };
 export interface Booking {
     id: number;
-    start_time: string;
-    end_time: string;
+    start_time: Date;
+    end_time: Date;
     name: string;
     status: string;
 }

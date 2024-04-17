@@ -23,7 +23,7 @@ export const getWeekHours = (startDate = dayjs()) => {
 
     // Adjust the starting date to the previous Sunday if it's not already Sunday
     let currentDate = dayjs(startDate);
-    console.log("current date", currentDate);
+    // console.log("current date", currentDate);
     if (currentDate.weekday() !== 0) {
         currentDate = currentDate.startOf("week");
     }
