@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+
 class BookingController extends Controller
 {
     /**
@@ -28,13 +29,18 @@ class BookingController extends Controller
     {
         $validatedData = $request->validated();
         $booking = new Booking();
-        $booking->name = $validatedData['name'];
-        $booking->status = $validatedData['status'];
-        $booking->start_time = $validatedData['start_time'];
-        $booking->end_time = $validatedData['end_time'];
-        $booking->save();
-        
-        return Redirect::route('timetable');
+        if ($booking->isTimeAvailable($validatedData['start_time'], $validatedData['end_time'])) {
+            debug($validatedData['start_time']);
+            debug($validatedData['end_time']);
+            $booking->name = $validatedData['name'];
+            $booking->status = $validatedData['status'];
+            $booking->setStartTimeAttribute($validatedData['start_time']);
+            $booking->setEndTimeAttribute($validatedData['end_time']);
+            $booking->save();
+            return Redirect::route('timetable');
+        } else {
+            return redirect()->back()->withErrors(['time' => 'The selected time is not available.']);
+        }
     }
 
     /**

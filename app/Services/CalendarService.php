@@ -43,10 +43,13 @@ class CalendarService
 
         return $calendarData;
     }
-    public function getBookingsAfterCurrentDate()
+    public function getBookingsForCurrentMonth()
     {
-        $currentDate = now();
-        $bookings = Booking::where('start_time', '>', $currentDate)->get();
+        $currentDate = now()->startOfMonth();
+        $nextMonth = now()->addMonth()->startOfMonth();
+        $bookings = Booking::where('start_time', '>', $currentDate)
+            ->where('start_time', '<', $nextMonth)
+            ->get();
         return $bookings;
     }
 }

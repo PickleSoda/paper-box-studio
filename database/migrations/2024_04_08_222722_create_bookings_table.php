@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('status');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
             $table->timestamps();
             $table->softDeletes();
         });

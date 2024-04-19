@@ -18,8 +18,8 @@ class BookingRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'status' => ['required', 'string'],
-            'start_time' => ['required', 'date'],
-            'end_time' => ['required', 'date'],
+            'start_time' => ['required', 'date_format:d-m-Y H:i'],
+            'end_time' => ['required', 'date_format:d-m-Y H:i'],            
         ];
     }
 }

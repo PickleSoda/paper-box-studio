@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import CalendarTable from "@/Components/CalendarTable";
+import DayTable from "@/Components/Time/DayTable";
 import BookingForm from "@/Components/BookingForm";
 import { Booking } from "@/types";
-import Modal from "@/Components/Modal";
+import Modal from "@/Components/Modal"; 
+import MonthCalendar from "@/Components/Time/MonthCalendar";
+import { useStoreState } from "pullstate";
+import { CalendarStore } from "@/store/calendar";
 export default function Dashboard({
     auth,
-    calendarData,
     bookings,
 }: PageProps<{ calendarData: any; bookings: Booking[] }>) {
+    useEffect(() => {
+        CalendarStore.update((state) => {
+            state.bookings = bookings;
+        });
+    }, [bookings, CalendarStore]);
+    const calendarStore = useStoreState(CalendarStore);
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [selectedTime, setSelectedTime] = useState<string>('');
     const openBookingModal = (time: string) => {
@@ -22,10 +30,10 @@ export default function Dashboard({
         setSelectedTime('');
         setShowBookingModal(false);
     };
-    console.log(bookings);
 
     // Example usage
     const date = new Date();
+
 
     return (
         <AuthenticatedLayout
@@ -40,21 +48,21 @@ export default function Dashboard({
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <Modal
-                            show={showBookingModal}
-                            onClose={closeBookingModal}
-                        >
-                           <BookingForm initialStartTime={selectedTime}/>
-                        </Modal>
-                        <CalendarTable
-                            calendarData={calendarData}
-                            date={date}
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
+                        
+                        <MonthCalendar/>
+                        <DayTable
                             openModal={openBookingModal}
                         />
                     </div>
                 </div>
             </div>
+            <Modal
+                            show={showBookingModal}
+                            onClose={closeBookingModal}
+                        >
+                           <BookingForm initialStartTime={selectedTime}/>
+                        </Modal>
         </AuthenticatedLayout>
     );
 }

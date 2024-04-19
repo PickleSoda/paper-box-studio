@@ -15,6 +15,8 @@ import localeData from "dayjs/plugin/localeData";
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
+import isBetween from "dayjs/plugin/isBetween";
+
 import { initializeDarkMode } from "./store/UIStore";
 dayjs.extend(customParseFormat);
 dayjs.extend(advancedFormat);
@@ -22,7 +24,7 @@ dayjs.extend(weekday);
 dayjs.extend(localeData);
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
-
+dayjs.extend(isBetween);
 initializeDarkMode()
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -39,7 +41,6 @@ createInertiaApp({
         root.render(
             <Theme accentColor="tomato" grayColor="sage" radius="small" scaling="95%">
                 <App {...props} />
-                <ThemePanel />
             </Theme>
         );
     },

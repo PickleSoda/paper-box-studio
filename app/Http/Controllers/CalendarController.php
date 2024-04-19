@@ -18,7 +18,7 @@ class CalendarController extends Controller
         $date = date('Y-m-d');
 
         $calendarData = $calendarService->generateCalendarDataForMonth($date);
-        $bookings = $calendarService->getBookingsAfterCurrentDate();
+        $bookings = $calendarService->getBookingsForCurrentMonth();
 
 
         return Inertia::render('Dashboard/TimeTable', [

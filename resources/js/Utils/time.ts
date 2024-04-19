@@ -46,7 +46,7 @@ export const getWeekHours = (startDate = dayjs()) => {
                     .minute(intervalIndex * 15);
 
                 // Format the time as a string with two digits
-                const formattedTime = time.format("DD-MM-YYYY HH:mm");
+                const formattedTime = time.format("DD-MM-YYYY HH:mm:ss");
 
                 // Add the formatted time to the interval array
                 hourIntervals.push(formattedTime);
@@ -90,6 +90,7 @@ export function getQuartoHourBlocks(selectedDate = dayjs().startOf("day")) {
 
     return hoursArray;
 }
+
 
 export function getHourBlocks(selectedDate = dayjs().startOf("day")) {
     const hoursArray = [];
