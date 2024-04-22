@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -12,43 +12,51 @@ interface BookingFormProps {
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ initialStartTime }) => {
-    const { data, setData, post, errors, processing } = useForm({
+    const [sendType,setSendType] = useState({type:"post",id:0});
+    const { data, setData, post,patch, errors, processing } = useForm({
         start_time: initialStartTime,
-        end_time: dayjs(initialStartTime,"DD-MM-YYYY HH:mm:ss")
+        end_time: dayjs(initialStartTime,"DD-MM-YYYY HH:mm")
             .add(1, "hour")
-            .format("DD-MM-YYYY HH:mm:ss"),
+            .format("DD-MM-YYYY HH:mm"),
         name: "",
         status: "",
     });
     const bookings = useStoreState(CalendarStore, (s) => s.bookings);
     useEffect(() => {
         const booking = bookings.find((booking) =>
-            dayjs(initialStartTime,"DD-MM-YYYY HH:mm:ss").isBetween(
+            dayjs(initialStartTime,"DD-MM-YYYY HH:mm").isBetween(
                 dayjs(booking.start_time),
                 dayjs(booking.end_time),
                 null,
                 "[)"
             )
         );
-        console.log(booking,dayjs(initialStartTime,"DD-MM-YYYY HH:mm:ss"),initialStartTime);
+        console.log(booking,dayjs(initialStartTime,"DD-MM-YYYY HH:mm"));
 
         if (booking) {
+            
             setData({
                 start_time: dayjs(booking.start_time).format(
-                    "YYYY-MM-DD HH:mm:ss"
+                    "DD-MM-YYYY HH:mm"
                 ),
                 end_time: dayjs(booking.end_time).format(
-                    "YYYY-MM-DD HH:mm:ss"
+                    "DD-MM-YYYY HH:mm"
                 ),
                 name: booking.name,
                 status: booking.status,
             });
+            setSendType({type:"patch" , id:booking.id});
         }
 }, [initialStartTime]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route("booking.store")); // Update your endpoint as needed
+        if(sendType.type === "post"){
+            post(route("booking.store"));
+        }
+        else{
+            patch(route("booking.update",sendType.id));
+        }
     };
 
     return (

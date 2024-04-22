@@ -1,14 +1,13 @@
 import React, { useState,useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { PageProps,Booking } from "@/types";
 import DayTable from "@/Components/Time/DayTable";
 import BookingForm from "@/Components/BookingForm";
-import { Booking } from "@/types";
 import Modal from "@/Components/Modal"; 
 import MonthCalendar from "@/Components/Time/MonthCalendar";
-import { useStoreState } from "pullstate";
 import { CalendarStore } from "@/store/calendar";
+import { useStoreState } from "pullstate";
 export default function Dashboard({
     auth,
     bookings,
@@ -19,6 +18,7 @@ export default function Dashboard({
         });
     }, [bookings, CalendarStore]);
     const calendarStore = useStoreState(CalendarStore);
+   
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [selectedTime, setSelectedTime] = useState<string>('');
     const openBookingModal = (time: string) => {
@@ -30,7 +30,7 @@ export default function Dashboard({
         setSelectedTime('');
         setShowBookingModal(false);
     };
-
+    console.log(bookings);
     // Example usage
     const date = new Date();
 

@@ -46,7 +46,7 @@ export const getWeekHours = (startDate = dayjs()) => {
                     .minute(intervalIndex * 15);
 
                 // Format the time as a string with two digits
-                const formattedTime = time.format("DD-MM-YYYY HH:mm:ss");
+                const formattedTime = time.format("DD-MM-YYYY HH:mm");
 
                 // Add the formatted time to the interval array
                 hourIntervals.push(formattedTime);

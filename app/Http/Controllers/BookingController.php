@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookingRequest;
+use App\Http\Requests\UpdateBookingRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -54,9 +55,18 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking): RedirectResponse
     {
         //
+        if (!$booking) {
+            // Handle the case where the booking is not found
+            return redirect()->back()->withErrors('Booking not found.');
+        }
+    
+        // Proceed with your existing logic
+        $booking->update($request->validated());
+    
+        return redirect()->route('timetable')->with('message', 'Booking updated successfully!');
     }
 
     /**
