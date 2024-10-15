@@ -26,7 +26,7 @@ dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
 dayjs.extend(isBetween);
 initializeDarkMode()
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = import.meta.env.VITE_APP_NAME || "Paperbox Studio";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
