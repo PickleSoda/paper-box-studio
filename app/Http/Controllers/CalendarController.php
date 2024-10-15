@@ -15,14 +15,10 @@ class CalendarController extends Controller
      */
     public function index(CalendarService $calendarService): Response
     {
-        $date = date('Y-m-d');
-
-        $calendarData = $calendarService->generateCalendarDataForMonth($date);
         $bookings = $calendarService->getBookingsForCurrentMonth();
 
 
         return Inertia::render('Dashboard/TimeTable', [
-            'calendarData' => $calendarData,
             'bookings' => $bookings
         ]);
     }

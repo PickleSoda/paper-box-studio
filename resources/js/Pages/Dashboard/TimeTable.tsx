@@ -11,7 +11,7 @@ import { CalendarStore } from "@/store/calendar";
 export default function Dashboard({
     auth,
     bookings,
-}: PageProps<{ calendarData: any; bookings: Booking[] }>) {
+}: PageProps<{ bookings: Booking[] }>) {
     useEffect(() => {
         CalendarStore.update((state) => {
             state.bookings = bookings;
