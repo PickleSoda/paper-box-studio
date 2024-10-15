@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from "react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps,Booking } from "@/types";
-import DayTable from "@/Components/Time/DayTable";
+import DayTable from "@/components/time/DayTable";
 import BookingForm from "@/Components/BookingForm";
 import Modal from "@/Components/Modal"; 
-import MonthCalendar from "@/Components/Time/MonthCalendar";
+import MonthCalendar from "@/components/Time/MonthCalendar";
 import { CalendarStore } from "@/store/calendar";
 import { useStoreState } from "pullstate";
 export default function Dashboard({
