@@ -1,249 +1,191 @@
-import { PropsWithChildren, ReactNode } from "react";
-import ApplicationLogo from "@/components/shared/ApplicationLogo";
-import UIStore from "@/store/UIStore";
+// Updated Authenticated.tsx
+
+import React, { PropsWithChildren, ReactNode } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import { cn } from "@/lib/utils";
 
+// Import ShadCN UI components
 import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-
+  CircleUser,
+  Menu,
+  Package2,
+  Search,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import {
-    NavigationMenu,
-    NavigationMenuList,
-    NavigationMenuItem,
-    NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
-
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-
-import { cn } from "@/lib/utils"; // Utility function for conditional classes
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { Method } from "@inertiajs/core";
 
 type NavigationItem = {
-    name: string;
-    href: string;
-    active: boolean;
+  name: string;
+  href: string;
+  active: boolean;
 };
 type ProfileLink = {
-    name: string;
-    href: string;
-    method: Method;
-    as: string;
+  name: string;
+  href: string;
+  method: Method;
+  as: string;
 };
-// Extracted navigation items
+
 const navigationItems: NavigationItem[] = [
-    {
-        name: "Dashboard",
-        href: route("dashboard"),
-        active: route().current("dashboard"),
-    },
-    {
-        name: "Bookings",
-        href: route("booking"),
-        active: route().current("booking"),
-    },
+  {
+    name: "Dashboard",
+    href: route("dashboard"),
+    active: route().current("dashboard"),
+  },
+  {
+    name: "Bookings",
+    href: route("booking"),
+    active: route().current("booking"),
+  },
+  // Add more navigation items as needed
 ];
 
-// Extracted profile links
 const profileLinks: ProfileLink[] = [
-    {
-        name: "Profile",
-        href: route("profile.edit"),
-        method: "get",
-        as: "a",
-    },
-    {
-        name: "Log Out",
-        href: route("logout"),
-        method: "post",
-        as: "button",
-    },
+  {
+    name: "Profile",
+    href: route("profile.edit"),
+    method: "get",
+    as: "a",
+  },
+  {
+    name: "Log Out",
+    href: route("logout"),
+    method: "post",
+    as: "button",
+  },
 ];
 
 export default function Authenticated({
-    user,
-    header,
-    children,
+  user,
+  header,
+  children,
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
-    const toggleDarkMode = () => {
-        UIStore.update((s) => {
-            return { isDarkMode: !s.isDarkMode };
-        });
-    };
+  return (
+    <div className="flex min-h-screen w-full flex-col">
+      {/* Header */}
+      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+        {/* Navigation Menu */}
+        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+          <Link
+            href={route("dashboard")}
+            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+          >
+            <Package2 className="h-6 w-6" />
+            <span className="sr-only">Your App Name</span>
+          </Link>
+          {navigationItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "transition-colors hover:text-foreground",
+                item.active ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
 
-    return (
-        <div className="min-h-screen bg-background">
-            <nav className="border-b">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        {/* Mobile menu button */}
-                        <div className="flex items-center sm:hidden">
-                            <Sheet>
-                                <SheetTrigger asChild>
-                                    <Button variant="ghost" className="flex items-center">
-                                        <svg
-                                            className="h-6 w-6"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            {/* Menu icon */}
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M4 6h16M4 12h16M4 18h16"
-                                            />
-                                        </svg>
-                                    </Button>
-                                </SheetTrigger>
-                                <SheetContent side="left">
-                                    {/* Mobile Navigation Links */}
-                                    <div className="py-4">
-                                        <NavigationMenu>
-                                            <NavigationMenuList className="flex flex-col space-y-2">
-                                                {navigationItems.map((item) => (
-                                                    <NavigationMenuItem key={item.name}>
-                                                        <NavigationMenuLink asChild>
-                                                            <Link
-                                                                href={item.href}
-                                                                className={cn(
-                                                                    "text-sm font-medium",
-                                                                    item.active
-                                                                        ? "text-primary"
-                                                                        : "text-muted-foreground"
-                                                                )}
-                                                            >
-                                                                {item.name}
-                                                            </Link>
-                                                        </NavigationMenuLink>
-                                                    </NavigationMenuItem>
-                                                ))}
-                                            </NavigationMenuList>
-                                        </NavigationMenu>
-                                    </div>
-                                    {/* User Info and Links */}
-                                    <div className="pt-4 border-t">
-                                        <div className="px-4">
-                                            <div className="font-medium text-base">{user.name}</div>
-                                            <div className="font-medium text-sm text-muted-foreground">
-                                                {user.email}
-                                            </div>
-                                        </div>
-                                        <div className="mt-3 space-y-1">
-                                            {profileLinks.map((link) => (
-                                                <Button
-                                                    key={link.name}
-                                                    variant="ghost"
-                                                    asChild
-                                                    className="w-full justify-start"
-                                                >
-                                                    <Link
-                                                        href={link.href}
-                                                        method={link.method}
-                                                        as={link.as}
-                                                    >
-                                                        {link.name}
-                                                    </Link>
-                                                </Button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </SheetContent>
-                            </Sheet>
-                        </div>
-
-                        {/* Centered Navigation (hidden on mobile) */}
-                        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-start">
-                            {/* Logo */}
-                            <Link href="/" className="shrink-0">
-                                <ApplicationLogo className="block h-9 w-auto dark:fill-white" />
-                            </Link>
-                            {/* Navigation Links */}
-                            <NavigationMenu>
-                                <NavigationMenuList className="flex space-x-4 ml-6">
-                                    {navigationItems.map((item) => (
-                                        <NavigationMenuItem key={item.name}>
-                                            <NavigationMenuLink asChild>
-                                                <Link
-                                                    href={item.href}
-                                                    className={cn(
-                                                        "text-sm font-medium transition-colors hover:text-primary",
-                                                        item.active
-                                                            ? "text-primary"
-                                                            : "text-muted-foreground"
-                                                    )}
-                                                >
-                                                    {item.name}
-                                                </Link>
-                                            </NavigationMenuLink>
-                                        </NavigationMenuItem>
-                                    ))}
-                                </NavigationMenuList>
-                            </NavigationMenu>
-                        </div>
-
-                        {/* Right side */}
-                        <div className="hidden sm:flex sm:items-center sm:space-x-4">
-                            {/* Dark Mode Toggle */}
-                            <Button variant="ghost" onClick={toggleDarkMode}>
-                                {/* You can replace this with an icon */}
-                                Dark
-                            </Button>
-                            {/* User Dropdown */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="flex items-center">
-                                        {user.name}
-                                        <svg
-                                            className="ml-2 h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    {profileLinks.map((link) => (
-                                        <DropdownMenuItem asChild key={link.name}>
-                                            <Link
-                                                href={link.href}
-                                                method={link.method}
-                                                as={link.as}
-                                            >
-                                                {link.name}
-                                            </Link>
-                                        </DropdownMenuItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
-                    </div>
-                </div>
+        {/* Mobile Menu */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <nav className="grid gap-6 text-lg font-medium">
+              <Link
+                href={route("dashboard")}
+                className="flex items-center gap-2 text-lg font-semibold"
+              >
+                <Package2 className="h-6 w-6" />
+                <span className="sr-only">Your App Name</span>
+              </Link>
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    "hover:text-foreground",
+                    item.active ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </nav>
+          </SheetContent>
+        </Sheet>
 
-            {header && (
-                <header className="bg-background shadow">
-                    <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
+        {/* Right Side */}
+        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+          {/* Search Form */}
+          <form className="ml-auto flex-1 sm:flex-initial">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search..."
+                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+              />
+            </div>
+          </form>
 
-            <main>{children}</main>
+          {/* User Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <CircleUser className="h-5 w-5" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {profileLinks.map((link) => (
+                <DropdownMenuItem asChild key={link.name}>
+                  <Link href={link.href} method={link.method} as={link.as}>
+                    {link.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-    );
+      </header>
+
+      {/* Optional Header (e.g., Page Title) */}
+      {header && (
+        <header className="bg-background shadow">
+          <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {header}
+          </div>
+        </header>
+      )}
+
+      {/* Main Content */}
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+        {children}
+      </main>
+    </div>
+  );
 }
