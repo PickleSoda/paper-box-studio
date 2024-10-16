@@ -45,7 +45,7 @@ const MonthCalendar: FC = () => {
         onSelect={handleDaySelect}
         month={calendarStore.daySelected.toDate()}
         onMonthChange={handleMonthChange}
-        disabled={(date) => dayjs(date).isBefore(currentDate, "day")}
+        // disabled={(date) => dayjs(date).isBefore(currentDate, "day")}
       />
     </div>
   );
