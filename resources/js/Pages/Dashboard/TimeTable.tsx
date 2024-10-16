@@ -3,7 +3,7 @@ import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps, Booking } from "@/types";
 import DayTable from "@/components/schedule/DayTable";
-import BookingForm from "@/components/shared/BookingForm";
+import BookingForm from "@/components/schedule/BookingForm";
 import MonthCalendar from "@/components/schedule/MonthCalendar";
 import { CalendarStore } from "@/store/calendar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -51,21 +51,23 @@ export default function Dashboard({
                 </h2>
             }
         >
-            <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col-reverse items-center lg:items-start lg:flex-row">
-                    <div className="lg:w-3/4 w-full mt-6 sm:mt-0">
-                        <DayTable openModal={openBookingModal} />
-                    </div>
-                    <Separator
-                        orientation="vertical"
-                        className="hidden sm:block"
-                    />
-                    <div className="lg:w-1/4 w-full flex justify-center lg:justify-end h-min">
-                        <MonthCalendar />
+            <Head title="Time Table" />
+            <div className="w-full lg:w-1/2 mx-auto mt-6 sm:mt-0">
+                <div className="py-12">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col-reverse items-center lg:items-start lg:flex-row">
+                        <div className="w-full flex justify-center lg:justify-start h-min">
+                            <MonthCalendar />
+                        </div>
+                        <div className="lg:w-full">
+                            <Separator
+                                orientation="vertical"
+                                className="hidden lg:block"
+                            />
+                            Some data for the left side
+                        </div>
                     </div>
                 </div>
+                <DayTable openModal={openBookingModal} />
             </div>
 
             <Dialog open={showBookingModal} onOpenChange={setShowBookingModal}>
@@ -76,7 +78,10 @@ export default function Dashboard({
                             Please fill in the booking details below.
                         </DialogDescription>
                     </DialogHeader>
-                    <BookingForm initialStartTime={selectedTime} />
+                    <BookingForm
+                        initialStartTime={selectedTime}
+                        onClose={() => setShowBookingModal(false)}
+                    />
                     <div className="flex justify-end gap-2 mt-4">
                         <Button variant="outline" onClick={closeBookingModal}>
                             Cancel
