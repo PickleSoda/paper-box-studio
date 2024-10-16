@@ -8,9 +8,7 @@ interface DayTableProps {
     openModal: CallableFunction;
 }
 
-const DayTable: FC<DayTableProps> = ({
-    openModal = () => {},
-}) => {
+const DayTable: FC<DayTableProps> = ({ openModal = () => {} }) => {
     const calendarStore = useStoreState(CalendarStore);
     const weekHours = getWeekHours(calendarStore.daySelected);
     const todaysHours = weekHours[calendarStore.daySelected.day()];
@@ -37,20 +35,22 @@ const DayTable: FC<DayTableProps> = ({
         const timeMoment = dayjs(time, "DD-MM-YYYY HH:mm");
         const foundBooking = findBooking(timeMoment);
         if (foundBooking) {
-            const isStart = timeMoment.isSame(dayjs(foundBooking.start_time));
-            const isEnd = timeMoment.isSame(
-                dayjs(foundBooking.end_time).subtract(1, "minute")
-            ); // Adjust if end time is inclusive
+            const isStart = timeMoment.isBetween(
+                dayjs(foundBooking.start_time).subtract(1, "minute"),
+                dayjs(foundBooking.start_time).add(15, "minute")
+            );
+            const isEnd = timeMoment.isBetween(
+                dayjs(foundBooking.end_time),
+                dayjs(foundBooking.end_time).subtract(16, "minute")
+            );
             return { booked: true, isStart, isEnd, name: foundBooking.name };
         }
         return { booked: false };
     };
-    
+
     return (
         <>
             <div className="dark:text-white">
-
-
                 <div className="w-full text-center text-3xl">
                     <h1>
                         Bookings for{" "}
@@ -61,57 +61,71 @@ const DayTable: FC<DayTableProps> = ({
                 <table className="w-full">
                     <tbody>
                         {todaysHours.map((hourIntervals, hourIndex) => (
-                            <tr key={hourIndex} className="border border-gray-300">
+                            <tr
+                                key={hourIndex}
+                                className="border-2 border-gray-300 dark:border-gray-700 rounded-lg"
+                            >
                                 {hourIntervals.map(
                                     (formattedTime, intervalIndex) => {
                                         const { booked, isStart, isEnd, name } =
                                             getQuartDetails(formattedTime);
                                         return (
-                                            <tr
+                                            <div
                                                 onClick={handleHourClick(
                                                     formattedTime
                                                 )}
                                                 key={intervalIndex}
-                                                className={`p-2 border border-gray-200 border-dashed ${
-                                                    booked
-                                                        ? (isStart
-                                                              ? "rounded-tl-lg rounded-tr-lg bg-blue-500"
-                                                              : "") +
-                                                          (isEnd
-                                                              ? " rounded-bl-lg rounded-br-lg bg-blue-500"
-                                                              : " bg-blue-300")
-                                                        : dayjs(
-                                                              formattedTime,
-                                                              "DD-MM-YYYY HH:mm"
-                                                          ).isBefore(
-                                                              currentDate,
-                                                              "minute"
-                                                          )
-                                                        ? " bg-gray-600/10"
-                                                        : "cursor-pointer hover:bg-green-100"
-                                                }`}
+                                                className={`p-2 flex ${
+                                                    isStart
+                                                        ? "rounded-tl-lg rounded-tr-lg bg-blue-500 dark:bg-slate-600 border-b-0"
+                                                        : 
+                                                    isEnd
+                                                        ? " rounded-bl-lg rounded-br-lg border-t-0 bg-blue-300 dark:bg-slate-800"
+                                                        :  booked && " bg-blue-300 dark:bg-slate-800 border-y-0"
+                                                } ${booked && "border-2 border-blue-700 dark:border-slate-400"} ${
+                                                    !booked &&
+                                                    "border border-gray-200 dark:border-gray-700 border-dashed border-x-0" +
+                                                        (intervalIndex === 0 &&
+                                                            "border-t-0") +
+                                                        (intervalIndex === 3 &&
+                                                            "border-b-0") +
+                                                        (dayjs(
+                                                            formattedTime,
+                                                            "DD-MM-YYYY HH:mm"
+                                                        ).isBefore(
+                                                            currentDate,
+                                                            "minute"
+                                                        )
+                                                            ? " bg-gray-600/10 hover:bg-red-500/20"
+                                                            : "cursor-pointer hover:bg-green-500/20 ")
+                                                }
+`}
                                             >
-                                                <td className={`${booked&&"text-white"} font-bold p-1`}>
+                                                <div
+                                                    className={`${
+                                                        booked && "text-white"
+                                                    } font-bold p-1`}
+                                                >
                                                     {
                                                         formattedTime.split(
                                                             " "
                                                         )[1]
                                                     }
-                                                </td>
+                                                </div>
 
-                                                <td
+                                                <div
                                                     key={intervalIndex}
-                                                    className="border border-gray-300 border-dashed w-full"
+                                                    className="w-full text-white font-bold p-1"
                                                 >
                                                     {isStart ? (
-                                                        <span className="text-white font-bold">
+                                                        <span className="">
                                                             {name}
                                                         </span>
                                                     ) : (
                                                         ""
                                                     )}
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </div>
                                         );
                                     }
                                 )}
