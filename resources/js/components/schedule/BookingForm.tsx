@@ -36,6 +36,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         errors,
         processing,
     } = useForm({
+        id: 0,
         start_time: initialStartTime,
         end_time: dayjs(initialStartTime, "DD-MM-YYYY HH:mm")
             .add(1, "hour")
@@ -58,6 +59,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
         if (booking) {
             setData({
+                id: booking.id,
                 start_time: dayjs(booking.start_time).format(
                     "DD-MM-YYYY HH:mm"
                 ),
