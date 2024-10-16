@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "@inertiajs/react";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
-import PrimaryButton from "@/Components/PrimaryButton";
-import InputError from "@/Components/InputError";
+import InputLabel from "@/components/shared/InputLabel";
+import TextInput from "@/components/shared/TextInput";
+import PrimaryButton from "@/components/shared/PrimaryButton";
+import InputError from "@/components/shared/InputError";
 import dayjs from "dayjs";
 import { CalendarStore } from "@/store/calendar";
 import { useStoreState } from "pullstate";

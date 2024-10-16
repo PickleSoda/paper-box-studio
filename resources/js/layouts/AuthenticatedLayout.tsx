@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
+import ApplicationLogo from "@/components/shared/ApplicationLogo";
 import UIStore from "@/store/UIStore";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";

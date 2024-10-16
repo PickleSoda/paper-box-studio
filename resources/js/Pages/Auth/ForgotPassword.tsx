@@ -1,7 +1,7 @@
 import GuestLayout from '@/layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/components/shared/InputError';
+import PrimaryButton from '@/components/shared/PrimaryButton';
+import TextInput from '@/components/shared/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 

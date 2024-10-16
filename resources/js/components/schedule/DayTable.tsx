@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import dayjs from "dayjs";
 import { useStoreState } from "pullstate";
 import { CalendarStore } from "@/store/calendar";
-import { getWeekHours } from "@/Utils/time";
+import { getWeekHours } from "@/utils/time";
 // Define the props for the CalendarTable component
 interface DayTableProps {
     openModal: CallableFunction;

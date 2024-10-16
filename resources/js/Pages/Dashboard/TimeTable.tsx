@@ -3,8 +3,8 @@ import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps,Booking } from "@/types";
 import DayTable from "@/components/schedule/DayTable";
-import BookingForm from "@/Components/BookingForm";
-import Modal from "@/Components/Modal"; 
+import BookingForm from "@/components/shared/BookingForm";
+import Modal from "@/components/shared/Modal"; 
 import MonthCalendar from "@/components/schedule/MonthCalendar";
 import { CalendarStore } from "@/store/calendar";
 
