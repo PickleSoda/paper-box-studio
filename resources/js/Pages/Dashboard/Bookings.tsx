@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps, Booking } from "@/types";
-import DayTable from "@/components/schedule/DayTable";
-import BookingForm from "@/components/schedule/BookingForm";
-import MonthCalendar from "@/components/schedule/MonthCalendar";
+import DayTable from "@/components/time-table/DayTable";
+import BookingForm from "@/components/time-table/BookingForm";
+import MonthCalendar from "@/components/time-table/MonthCalendar";
 import { CalendarStore } from "@/store/calendar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -47,7 +45,7 @@ export default function Dashboard({
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-foreground leading-tight">
-                    Time Table
+                    Bookings
                 </h2>
             }
         >
@@ -82,14 +80,6 @@ export default function Dashboard({
                         initialStartTime={selectedTime}
                         onClose={() => setShowBookingModal(false)}
                     />
-                    <div className="flex justify-end gap-2 mt-4">
-                        <Button variant="outline" onClick={closeBookingModal}>
-                            Cancel
-                        </Button>
-                        <Button type="submit" form="booking-form">
-                            Confirm Booking
-                        </Button>
-                    </div>
                 </DialogContent>
             </Dialog>
         </AuthenticatedLayout>

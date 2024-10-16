@@ -45,9 +45,9 @@ const navigationItems: NavigationItem[] = [
         active: route().current("dashboard"),
     },
     {
-        name: "Time Table",
-        href: route("timetable"),
-        active: route().current("timetable"),
+        name: "Bookings",
+        href: route("booking"),
+        active: route().current("booking"),
     },
 ];
 

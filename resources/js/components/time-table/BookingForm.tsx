@@ -80,18 +80,27 @@ const BookingForm: React.FC<BookingFormProps> = ({
         e.preventDefault();
         if (sendType.type === "post") {
             post(route("booking.store"), {
-                onSuccess: () => onClose(),
+                onSuccess: () => {
+                    console.log("onSuccess");
+                    onClose();
+                },
             });
         } else {
             patch(route("booking.update", sendType.id), {
-                onSuccess: () => onClose(),
+                onSuccess: () => {
+                    console.log("onSuccess");
+                    onClose();
+                },
             });
         }
     };
 
     const handleDelete = () => {
         destroy(route("booking.destroy", sendType.id), {
-            onSuccess: () => onClose(),
+            onSuccess: () => {
+                console.log("onSuccess");
+                onClose();
+            },
         });
     };
     const handleDurationChange = (value: string) => {
@@ -101,6 +110,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
             .format("DD-MM-YYYY HH:mm");
         setData("end_time", newEndTime);
     };
+
     return (
         <form onSubmit={handleSubmit} className="space-y-6 p-4">
             <div>
@@ -110,7 +120,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                     type="text"
                     value={data.start_time}
                     onChange={(e) => setData("start_time", e.target.value)}
-                    required
+                    // required
                 />
                 <InputError message={errors.start_time} />
             </div>
@@ -182,7 +192,11 @@ const BookingForm: React.FC<BookingFormProps> = ({
                     </Button>
                 )}
                 <Button type="submit" disabled={processing}>
-                    {processing ? "Submitting..." : "Submit"}
+                    {processing
+                        ? "Submitting..."
+                        : sendType.type == "patch"
+                        ? "Update"
+                        : "Create"}
                 </Button>
             </div>
         </form>

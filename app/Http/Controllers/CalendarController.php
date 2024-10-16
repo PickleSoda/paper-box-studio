@@ -18,7 +18,7 @@ class CalendarController extends Controller
         $bookings = $calendarService->getBookingsForCurrentMonth();
 
 
-        return Inertia::render('Dashboard/TimeTable', [
+        return Inertia::render('TimeTable', [
             'bookings' => $bookings
         ]);
     }
