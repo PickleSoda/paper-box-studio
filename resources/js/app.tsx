@@ -1,13 +1,14 @@
 import "./bootstrap";
-import "../css/app.css";;
+import "../css/app.css";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { Theme,ThemePanel } from "@radix-ui/themes";
-import '@radix-ui/themes/styles.css';
-import '@radix-ui/themes/layout/tokens.css';
-import '@radix-ui/themes/layout/components.css';
-import '@radix-ui/themes/layout/utilities.css';
+import { LaravelReactI18nProvider } from "laravel-react-i18n";
+import { Theme } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
+import "@radix-ui/themes/layout/tokens.css";
+import "@radix-ui/themes/layout/components.css";
+import "@radix-ui/themes/layout/utilities.css";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -25,7 +26,7 @@ dayjs.extend(localeData);
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
 dayjs.extend(isBetween);
-initializeDarkMode()
+initializeDarkMode();
 const appName = import.meta.env.VITE_APP_NAME || "Paperbox Studio";
 
 createInertiaApp({
@@ -39,9 +40,20 @@ createInertiaApp({
         const root = createRoot(el);
 
         root.render(
-            <Theme accentColor="tomato" grayColor="sage" radius="small" scaling="95%">
-                <App {...props} />
-            </Theme>
+            <LaravelReactI18nProvider
+                locale={"uk"}
+                fallbackLocale={"en"}
+                files={import.meta.glob("/lang/*.json")}
+            >
+                <Theme
+                    accentColor="tomato"
+                    grayColor="sage"
+                    radius="small"
+                    scaling="95%"
+                >
+                    <App {...props} />
+                </Theme>
+            </LaravelReactI18nProvider>
         );
     },
     progress: {

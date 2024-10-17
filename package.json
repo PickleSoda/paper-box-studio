@@ -40,6 +40,7 @@
         "clsx": "^2.1.1",
         "date-fns": "^3.6.0",
         "dayjs": "^1.11.10",
+        "laravel-react-i18n": "^2.0.5",
         "lucide-react": "^0.453.0",
         "pullstate": "^1.25.0",
         "react-day-picker": "^8.10.1",

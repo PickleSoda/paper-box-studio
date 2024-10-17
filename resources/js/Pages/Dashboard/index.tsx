@@ -1,12 +1,13 @@
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 export default function Dashboard({ auth }: PageProps) {
+    const { t } = useLaravelReactI18n();
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{t('hi')}</h2>}
         >
             <Head title="Dashboard" />
 

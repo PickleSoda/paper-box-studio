@@ -8,26 +8,50 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    $defaultLocale = config('app.locale'); // e.g., 'en'
+    return redirect()->to('/' . $defaultLocale);
 });
 
+Route::group(['prefix' => '{locale}', 'middleware' => 'locale'], function () {
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard/index');
-    })->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::middleware(['role:admin|moderator'])->group(function () {
-        Route::get('/booking', [BookingController::class, 'index'])->name('booking');
-        Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-        Route::patch('/booking/{booking}', [BookingController::class, 'update'])->name('booking.update');
-        Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+    Route::get('/', function () {
+        return Inertia::render('Welcome', [
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    });
+
+    Route::middleware(['auth'])->group(function () {
+
+        Route::get('/dashboard', function () {
+            return Inertia::render('Dashboard/index');
+        })->name('dashboard');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::middleware(['role:admin|moderator'])->group(function () {
+
+            Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+            Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+            Route::patch('/booking/{booking}', [BookingController::class, 'update'])->name('booking.update');
+            Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+        });
     });
 });
+
+Route::fallback(function () {
+    $defaultLocale = config('app.locale');
+    $currentPath = request()->path();
+
+    // Prevent redirect loop if already on the default locale
+    if (!str_starts_with($currentPath, $defaultLocale)) {
+        return redirect()->to('/' . $defaultLocale . '/' . $currentPath);
+    }
+
+    // Optionally, render a 404 page or similar
+    abort(404);
+});
+
 
 require __DIR__ . '/auth.php';
