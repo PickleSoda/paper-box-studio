@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BookingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PageController;
 
 use Inertia\Inertia;
 
@@ -36,6 +37,10 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'locale'], function () {
             Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
             Route::patch('/booking/{booking}', [BookingController::class, 'update'])->name('booking.update');
             Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+            Route::get('/admin/pages/create', [PageController::class, 'create'])->name('pages.create');
+            Route::post('/admin/pages', [PageController::class, 'store'])->name('pages.store');
+            Route::get('/admin/pages/{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
+            Route::post('/admin/pages/{id}', [PageController::class, 'update'])->name('pages.update');
         });
     });
 });
