@@ -37,10 +37,15 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'locale'], function () {
             Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
             Route::patch('/booking/{booking}', [BookingController::class, 'update'])->name('booking.update');
             Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
-            Route::get('/admin/pages/create', [PageController::class, 'create'])->name('pages.create');
-            Route::post('/admin/pages', [PageController::class, 'store'])->name('pages.store');
-            Route::get('/admin/pages/{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
-            Route::post('/admin/pages/{id}', [PageController::class, 'update'])->name('pages.update');
+
+
+            Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+            Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
+            Route::get('/pages/create/{pageId?}', [PageController::class, 'create'])->name('pages.create');
+            Route::get('/pages/edit/{pageId?}', [PageController::class, 'edit'])->name('pages.edit');
+            Route::patch('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
+            Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+
         });
     });
 });

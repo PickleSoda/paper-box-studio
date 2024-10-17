@@ -11,13 +11,13 @@ class PageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function create()
+    public function index()
     {
-        // Fetch all pages to allow selecting a parent page (if applicable)
-        $allPages = Page::all();
+        // Fetch all pages, including their relationships (parent/children if necessary)
+        $pages = Page::with('children', 'parent')->get();
 
-        return Inertia::render('Admin/PageForm', [
-            'allPages' => $allPages
+        return Inertia::render('Admin/Pages/index', [
+            'pages' => $pages
         ]);
     }
 
@@ -32,22 +32,38 @@ class PageController extends Controller
             'description' => 'nullable|string',
             'content' => 'required|string',
             'cover_image' => 'nullable|string',
-            'parent_id' => 'nullable|exists:pages,id', // parent page should exist in the pages table
+            'parent_id' => 'nullable|exists:pages,id', // Ensure the parent page exists
         ]);
 
         // Create the new page
         Page::create($validated);
 
-        // Redirect to the admin pages index or back to form with success message
-        return redirect()->route('pages')->with('success', 'Page created successfully');
+        // Redirect to the pages index with a success message
+        return redirect()->route('pages.index')->with('success', 'Page created successfully');
+    }
+
+    public function create(Request $request)
+    {
+        $pageId = $request->route('pageId');
+        $page = Page::findOrFail($pageId);
+
+        return Inertia::render('Admin/Pages/Form', [
+            'parent' => $page,
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function edit(Request $request)
     {
-        //
+        $pageId = $request->route('pageId');
+        $page = Page::with('children')->findOrFail($pageId);
+
+        return Inertia::render('Admin/Pages/Form', [
+            'page' => $page,
+            'childPages' => $page->children ?? [],
+        ]);
     }
 
     /**
@@ -55,7 +71,21 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the updated input
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'content' => 'required|string',
+            'cover_image' => 'nullable|string',
+            'parent_id' => 'nullable|exists:pages,id', // Ensure parent page exists
+        ]);
+
+        // Find the page and update it
+        $page = Page::findOrFail($id);
+        $page->update($validated);
+
+        // Redirect back to the pages list with a success message
+        return redirect()->route('pages.index')->with('success', 'Page updated successfully');
     }
 
     /**
@@ -63,6 +93,11 @@ class PageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the page and delete it
+        $page = Page::findOrFail($id);
+        $page->delete();
+
+        // Redirect back to the pages list with a success message
+        return redirect()->route('pages.index')->with('success', 'Page deleted successfully');
     }
 }

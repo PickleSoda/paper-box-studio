@@ -19,3 +19,14 @@ export interface Booking {
     name: string;
     status: string;
 }
+export type BlogPageType = {
+    id: number;
+    title: string;
+    description: string;
+    content: string;
+    cover_image: string;
+    is_visible: boolean;
+    parent_id: number | null;
+    created_at: string;
+    updated_at: string;
+};
