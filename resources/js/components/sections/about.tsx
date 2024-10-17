@@ -1,60 +1,47 @@
-import pilot from "../assets/pilot.png";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-interface AboutProps {
-  title: string;
-  description: string;
-  stats: {
-    quantity: string;
-    description: string;
-  }[];
-}
-
-export const About: React.FC<AboutProps> = ({ title, description, stats }) => {
+export const About = () => {
   return (
-    <section id="about" className="container py-24 sm:py-32">
-      <div className="bg-muted/50 border rounded-lg py-12">
-        <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">
-          <img
-            src={pilot}
-            alt=""
-            className="w-[300px] object-contain rounded-lg"
-          />
-          <div className="bg-green-0 flex flex-col justify-between">
-            <div className="pb-6">
-              <h2 className="text-3xl md:text-4xl font-bold">
-                <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-                  {title}
-                </span>
-              </h2>
-              <p className="text-xl text-muted-foreground mt-4">{description}</p>
-            </div>
+    <section id="about" className="py-12 bg-foreground/10">
+      <hr className="border-border" />
+      <div className="container py-20 sm:py-20">
+        <div className="lg:w-[60%] mx-auto">
+          <Card className="bg-background border-none shadow-none text-center flex flex-col items-center justify-center">
+            <CardHeader>
+              <CardTitle className="text-4xl md:text-5xl font-bold flex flex-col items-center">
+                {/* <DiscordIcon /> */}
+                <div>
+                  Ready to 
+                  <span className="text-transparent pl-2 bg-gradient-to-r from-[#D247BF] to-primary bg-clip-text">
+                    book?
+                  </span>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="lg:w-[80%] text-xl text-muted-foreground">
+              Message us on socials<br />
+               or <br />
+               Click to dive in! 🚀
+            </CardContent>
 
-            <Statistics stats={stats} />
-          </div>
+            <CardFooter>
+              <Button asChild>
+                <a href="https://discord.com/" target="_blank">
+                  Request a Booking
+                </a>
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
-    </section>
-  );
-};
-
-interface StatisticsProps {
-  stats: {
-    quantity: string;
-    description: string;
-  }[];
-}
-
-const Statistics: React.FC<StatisticsProps> = ({ stats }) => {
-  return (
-    <section id="statistics">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        {stats.map(({ quantity, description }) => (
-          <div key={description} className="space-y-2 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold ">{quantity}</h2>
-            <p className="text-xl text-muted-foreground">{description}</p>
-          </div>
-        ))}
-      </div>
+      <hr className="border-border" />
     </section>
   );
 };

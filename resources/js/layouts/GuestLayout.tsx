@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
-
+import { Footer } from "@/components/sections/footer";
 import { PackageOpen, Menu } from "lucide-react";
 import {
     Sheet,
@@ -71,7 +71,7 @@ export default function Guest({
     const [isOpen, setIsOpen] = React.useState(false);
     return (
         <>
-            <header className="shadow-inner w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 dark:bg-stone-950/40 bg-stone-100/60">
+            <header className="shadow-inner w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-border z-40 rounded-2xl flex justify-between items-center p-2 bg-background/70">
                 <Link
                     href="/"
                     className=" text-lg flex items-center gap-2 px-2"
@@ -91,19 +91,17 @@ export default function Guest({
 
                         <SheetContent
                             side="left"
-                            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-card border-secondary"
+                            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-background/80 border-border"
                         >
                             <div>
                                 <SheetHeader className="mb-4 ml-4">
-                                    <SheetTitle className="flex items-center">
-                                        <Link
-                                            href="/"
-                                            className="flex items-center"
-                                        >
-                                            <PackageOpen className="bg-gradient-to-tr border-secondary from-primary via-primary/70 to-primary rounded-lg w-9 h-9 mr-2 border text-white" />
-                                            Paper Box
-                                        </Link>
-                                    </SheetTitle>
+                                    <Link
+                                        href="/"
+                                        className=" text-lg flex items-center gap-2 px-2"
+                                    >
+                                        <PackageOpen className="w-8 h-8" />
+                                        Paper Box
+                                    </Link>
                                 </SheetHeader>
 
                                 <div className="flex flex-col gap-2">
@@ -204,9 +202,8 @@ export default function Guest({
                     <ToggleTheme />
                 </div>
             </header>
-            <div className="w-full m-0 p-0 -mt-14">
-                {children}
-            </div>
+            <div className="w-full m-0 p-0 -mt-14">{children}</div>
+            <Footer/>
         </>
     );
 }

@@ -1,9 +1,9 @@
 .dots {
     /* Comment: Styles the element for the polka dot background pattern */
     /* Comment: Sets the height of the element */
-    background-image: radial-gradient(#f0ad6a 15%, transparent 21%),
+    background-image: radial-gradient(hsl(var(--primary) / 0.5) 5%, transparent 10%),
         /* Comment: Defines a radial gradient for black dots */
-            radial-gradient(#fbc590 15%, transparent 21%); /* Comment: Defines a radial gradient for red dots */
+            radial-gradient(hsl(var(--primary) / 0.2) 5%, transparent 10%); /* Comment: Defines a radial gradient for red dots */
     background-size: 40px 40px; /* Comment: Sets the size of the background dots */
     background-position: 0 0, 20px 20px; /* Comment: Sets the position of the background dots */
     background-repeat: repeat; /* Comment: Specifies that the background pattern should repeat */
