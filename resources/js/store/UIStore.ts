@@ -51,4 +51,9 @@ UIStore.createReaction(
   }
 );
 
+export function toggleDarkMode() {
+  UIStore.update((s) => {
+    return { isDarkMode: !s.isDarkMode };
+  });
+}
 export default UIStore;

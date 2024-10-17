@@ -4,13 +4,14 @@ import React, { PropsWithChildren, ReactNode } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import { cn } from "@/lib/utils";
-
+import { toggleDarkMode } from "@/store/UIStore";
 // Import ShadCN UI components
 import {
   CircleUser,
   Menu,
   Package2,
   Search,
+  Sun
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -75,7 +76,7 @@ export default function Authenticated({
   return (
     <div className="flex min-h-screen w-full flex-col">
       {/* Header */}
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-white dark:bg-stone-950 px-4 md:px-6 z-50">
         {/* Navigation Menu */}
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
@@ -83,7 +84,7 @@ export default function Authenticated({
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Your App Name</span>
+            <span className="sr-only">Paperbox Studio</span>
           </Link>
           {navigationItems.map((item) => (
             <Link
@@ -170,6 +171,9 @@ export default function Authenticated({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button onClick={()=>toggleDarkMode()} variant="secondary" size="icon" className="rounded-full">
+                <Sun className="h-5 w-5" />
+              </Button>
         </div>
       </header>
 
