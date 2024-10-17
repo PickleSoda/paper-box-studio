@@ -4,7 +4,8 @@ import React, { PropsWithChildren, ReactNode } from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import { cn } from "@/lib/utils";
-import { toggleDarkMode } from "@/store/UIStore";
+import { ToggleTheme } from "@/components/ui/toggle-theme";
+
 // Import ShadCN UI components
 import {
   CircleUser,
@@ -171,9 +172,7 @@ export default function Authenticated({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={()=>toggleDarkMode()} variant="secondary" size="icon" className="rounded-full">
-                <Sun className="h-5 w-5" />
-              </Button>
+          <ToggleTheme />
         </div>
       </header>
 
