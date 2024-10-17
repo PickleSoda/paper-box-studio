@@ -1,4 +1,29 @@
 {
-    "hi": "Hello",
-    "hello": "Hello"
-}
+    "paperBox": {
+      "title": "Paper Box",
+      "description": "A simple and easy to use note taking app.",
+      "createNote": "Create Note",
+      "noNotes": "No notes found. Click the button above to create a new note."
+    },
+    "no": "No",
+    "confirmPassword": {
+      "title": "Confirm Your Password",
+      "description": "This is a secure area of the application. Please confirm your password before continuing.",
+      "passwordLabel": "Password",
+      "submitButton": "Confirm",
+      "errors": {
+        "password": "The password field is required."
+      }
+    },
+    "login": {
+      "title": "Login",
+      "description": "Enter your email below to login to your account",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot your password?",
+      "loginButton": "Login",
+      "loginWithGoogle": "Login with Google",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    }
+  }

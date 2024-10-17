@@ -16,7 +16,7 @@ const benefitList: BenefitsProps[] = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam. Natus consectetur dolores.",
     },
     {
-        icon: "LineChart",
+        icon: "Blocks",
         title: "More Leads",
         description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam, natus consectetur.",
@@ -62,12 +62,12 @@ export const BenefitsSection = () => {
                         >
                             <CardHeader>
                                 <div className="flex justify-between">
-                                    {/* <Icon
+                                    <Icon
                                         name={icon as keyof typeof icons}
                                         size={24}
                                         color="hsl(var(--primary))"
                                         className="text-primary"
-                                    /> */}
+                                    />
                                     <span className="text-5xl text-muted-foreground/15 font-medium transition-all delay-75 group-hover/number:text-muted-foreground/30">
                                         0{index + 1}
                                     </span>

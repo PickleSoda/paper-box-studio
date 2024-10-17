@@ -67,7 +67,7 @@ const routeList: RouteProps[] = [
 export default function Guest({
     user,
     children,
-}: PropsWithChildren<{ user: User }>) {
+}: PropsWithChildren<{ user?: User }>) {
     const [isOpen, setIsOpen] = React.useState(false);
     return (
         <>
