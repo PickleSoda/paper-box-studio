@@ -122,5 +122,5 @@ theme: {
 },
 
     plugins: [forms, require("tailwindcss-animate")],
-    darkMode: ['class', 'class'],
+    darkMode: 'class',
 };
