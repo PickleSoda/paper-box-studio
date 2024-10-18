@@ -30,3 +30,11 @@ export type BlogPageType = {
     created_at: string;
     updated_at: string;
 };
+
+export type BlogPageListType = {
+    id: number;
+    title: string;
+    description: string;
+    is_visible: boolean;
+    subpages: BlogPageListType[];
+};

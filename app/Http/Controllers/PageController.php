@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Services\PageService;
 use Inertia\Inertia;
 
 class PageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $pageService;
+
+    public function __construct(PageService $pageService)
+    {
+        $this->pageService = $pageService;
+    }
+
     public function index()
     {
-        // Fetch all pages, including their relationships (parent/children if necessary)
-        $pages = Page::with('children', 'parent')->get();
+        // Use the PageService to get pages with subpages
+        $pages = $this->pageService->getPagesWithSubpages();
 
         return Inertia::render('Admin/Pages/index', [
             'pages' => $pages
@@ -69,8 +74,12 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Page $page)
     {
+        if (!$page) {
+            return back()->withErrors(['page' => 'Page not found']);
+        }
+
         // Validate the updated input
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -80,24 +89,23 @@ class PageController extends Controller
             'parent_id' => 'nullable|exists:pages,id', // Ensure parent page exists
         ]);
 
-        // Find the page and update it
-        $page = Page::findOrFail($id);
         $page->update($validated);
 
         // Redirect back to the pages list with a success message
-        return redirect()->route('pages.index')->with('success', 'Page updated successfully');
+        return back()->with('success', 'Page updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
+        $pageId = $request->route('pageId');
         // Find the page and delete it
-        $page = Page::findOrFail($id);
+        $page = Page::findOrFail($pageId);
         $page->delete();
 
         // Redirect back to the pages list with a success message
-        return redirect()->route('pages.index')->with('success', 'Page deleted successfully');
+        return back()->with('success', 'Page deleted successfully');
     }
 }

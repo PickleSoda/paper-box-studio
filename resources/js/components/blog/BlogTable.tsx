@@ -27,7 +27,7 @@ export default function BlogTable({ pages }: { pages: BlogPageType[] }) {
     // Handle delete
     const handleDelete = (pageId: number) => {
         if (confirm("Are you sure you want to delete this page?")) {
-            destroy(`/admin/pages/${pageId}`); // Send delete request
+            destroy(route("pages.destroy", pageId)); // Send delete request
         }
     };
 
@@ -56,7 +56,7 @@ export default function BlogTable({ pages }: { pages: BlogPageType[] }) {
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="mr-2"
+                                className="mr-2 bg-amber-400/70"
                             >
                                 <Link href={route("pages.edit", page.id)}>
                                     Edit
@@ -64,13 +64,11 @@ export default function BlogTable({ pages }: { pages: BlogPageType[] }) {
                             </Button>
                             <Button
                                 variant="outline"
-                                className="mr-2"
-
+                                className="mr-2 bg-green-500/70"
                             >
                                 <Link href={route("pages.create", page.id)}>
-                                Add Sub Page
+                                    Add Sub Page
                                 </Link>
-
                             </Button>
 
                             <Button

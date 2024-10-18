@@ -2,7 +2,6 @@ import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { useLaravelReactI18n } from "laravel-react-i18n";
-import { useForm } from "@inertiajs/react";
 import BlogTable from "@/components/blog/BlogTable";
 import { BlogPageType } from "@/types";
 

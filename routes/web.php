@@ -44,7 +44,7 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'locale'], function () {
             Route::get('/pages/create/{pageId?}', [PageController::class, 'create'])->name('pages.create');
             Route::get('/pages/edit/{pageId?}', [PageController::class, 'edit'])->name('pages.edit');
             Route::patch('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
-            Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+            Route::delete('/pages/{pageId}', [PageController::class, 'destroy'])->name('pages.destroy');
 
         });
     });

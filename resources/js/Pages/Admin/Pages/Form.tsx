@@ -7,15 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import BlogTable from "@/components/blog/BlogTable";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function PageForm({
     auth,
     page,
     parent,
-}: PageProps<{ page?: BlogPageType; parent?: BlogPageType }>) {
+    childPages,
+}: PageProps<{
+    page?: BlogPageType;
+    parent?: BlogPageType;
+    childPages?: BlogPageType[];
+}>) {
     const { t } = useLaravelReactI18n();
     console.log(page);
     console.log(parent);
+    console.log(childPages);
     const { data, setData, post, errors } = useForm({
         title: page?.title || "",
         description: page?.description || "",
@@ -38,11 +46,11 @@ export default function PageForm({
             user={auth.user}
             header={
                 page?.id ? (
-                    <h1 className="text-2xl font-bold mb-4">
-                        Edit {page?.title} Page
+                    <h1 className="text-2xl font-bold m-4">
+                        {page?.title} Page
                     </h1>
                 ) : (
-                    <h1 className="text-2xl font-bold mb-4">
+                    <h1 className="text-2xl font-bold m-4">
                         Create New {parent?.title} Page{" "}
                     </h1>
                 )
@@ -51,6 +59,13 @@ export default function PageForm({
             <Head title="Dashboard" />
 
             <div className="container">
+                {childPages && (
+                    <Card className="my-20">
+                        <CardContent>
+                            <BlogTable pages={childPages} />
+                        </CardContent>
+                    </Card>
+                )}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <Label htmlFor="title">Title</Label>
