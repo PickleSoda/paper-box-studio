@@ -61,7 +61,7 @@ const profileLinks: ProfileLink[] = [
         name: "Log Out",
         href: route("logout"),
         method: "post",
-        as: "button",
+        as: "a",
     },
 ];
 
@@ -79,7 +79,7 @@ export default function Authenticated({
             {/* Header */}
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
                 {/* Navigation Menu */}
-                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+                <nav className="hidden gap-6 text-base font-medium md:flex  flex-row items-center">
                     <Link
                         href={route("dashboard")}
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"

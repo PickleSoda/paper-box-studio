@@ -34,11 +34,6 @@ function updateHtmlClass(isDarkMode: boolean) {
     } else {
       htmlElement.classList.remove("dark");
     }
-    // Optionally, set color-scheme for built-in UI elements
-    htmlElement.style.setProperty(
-      "color-scheme",
-      isDarkMode ? "dark" : "light"
-    );
   }
 }
 

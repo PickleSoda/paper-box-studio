@@ -91,7 +91,7 @@ export default function Guest({
 
                         <SheetContent
                             side="left"
-                            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-background/80 border-border"
+                            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl"
                         >
                             <div>
                                 <SheetHeader className="mb-4 ml-4">

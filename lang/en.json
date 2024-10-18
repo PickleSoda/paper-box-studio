@@ -19,6 +19,7 @@
       "title": "Login",
       "description": "Enter your email below to login to your account",
       "emailLabel": "Email",
+      "rememberMe": "Remember me",
       "passwordLabel": "Password",
       "forgotPassword": "Forgot your password?",
       "loginButton": "Login",
