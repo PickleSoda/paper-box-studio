@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import BlogTable from "@/components/blog/BlogTable";
+import CmsPagesTable from "@/components/cms-pages/CmsPagesTable";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function PageForm({
@@ -62,7 +62,7 @@ export default function PageForm({
                 {childPages && (
                     <Card className="my-20">
                         <CardContent>
-                            <BlogTable pages={childPages} />
+                            <CmsPagesTable pages={childPages} />
                         </CardContent>
                     </Card>
                 )}

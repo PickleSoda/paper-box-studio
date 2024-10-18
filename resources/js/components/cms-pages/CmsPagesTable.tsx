@@ -14,7 +14,7 @@ import { useForm } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import { BlogPageType } from "@/types";
 
-export default function BlogTable({ pages }: { pages: BlogPageType[] }) {
+export default function CmsPagesTable({ pages }: { pages: BlogPageType[] }) {
     const { t } = useLaravelReactI18n();
     const { post, delete: destroy } = useForm();
 

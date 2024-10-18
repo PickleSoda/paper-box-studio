@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { useLaravelReactI18n } from "laravel-react-i18n";
-import BlogTable from "@/components/blog/BlogTable";
+import CmsPagesTable from "@/components/cms-pages/CmsPagesTable";
 import { BlogPageType } from "@/types";
 
 export default function Pages({
@@ -25,7 +25,7 @@ export default function Pages({
             <div className="container">
                 <h1 className="text-2xl font-bold mb-4">All Pages</h1>
 
-                <BlogTable pages={pages} />
+                <CmsPagesTable pages={pages} />
             </div>
         </AuthenticatedLayout>
     );
