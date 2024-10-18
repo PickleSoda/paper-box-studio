@@ -1,3 +1,6 @@
+import { Method } from "@inertiajs/core";
+import { type LucideIcon } from "lucide-react";
+
 export interface User {
     id: number;
     name: string;
@@ -37,4 +40,13 @@ export type BlogPageListType = {
     description: string;
     is_visible: boolean;
     subpages: BlogPageListType[];
+};
+
+type PageItem = {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    isActive?: boolean;
+    method?: Method;
+    items?: PageItem[];
 };
