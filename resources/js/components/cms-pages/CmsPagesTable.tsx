@@ -14,14 +14,17 @@ import { useForm } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import { BlogPageType } from "@/types";
 
+
 export default function CmsPagesTable({ pages }: { pages: BlogPageType[] }) {
     const { t } = useLaravelReactI18n();
-    const { post, delete: destroy } = useForm();
+    const { patch, delete: destroy } = useForm();
 
     // Handle visibility toggle
     const toggleVisibility = (page: BlogPageType) => {
         // Call API or Inertia post here to toggle visibility
-        post(`/admin/pages/${page.id}/toggle-visibility`);
+        patch(route('pages.changeVisibility', { pageId: page.id }), {
+            onSuccess: () => alert('Visibility changed successfully'),
+        });
     };
 
     // Handle delete

@@ -107,4 +107,11 @@ class PageController extends Controller
 
         return back()->with('success', 'Page deleted successfully');
     }
+
+    public function changeVisibility(Request $request)
+    {
+        $pageId = $request->route('pageId');
+        $this->pageService->changeVisibility($pageId);
+        return back()->with('success', 'Page visibility updated successfully');
+    }
 }

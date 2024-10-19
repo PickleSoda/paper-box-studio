@@ -83,5 +83,17 @@ class PageService
         $page = Page::findOrFail($pageId);
         $page->delete();
     }
+
+    public function changeVisibility(int $pageId)
+    {
+        // Find the page by ID
+        $page = Page::findOrFail($pageId);
+
+        // Toggle the 'is_visible' field
+        $page->is_visible = !$page->is_visible;
+
+        // Save the change
+        $page->save();
+    }
 }
 
