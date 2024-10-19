@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { PageProps, Booking } from "@/types";
+import { PageProps, Booking, PageType } from "@/types";
 import DayTable from "@/components/time-table/DayTable";
 import BookingForm from "@/components/time-table/BookingForm";
 import MonthCalendar from "@/components/time-table/MonthCalendar";
@@ -19,8 +19,10 @@ import {
 
 export default function Dashboard({
     auth,
+    cms,
     bookings,
 }: PageProps<{ bookings: Booking[] }>) {
+    console.log(cms);
     useEffect(() => {
         CalendarStore.update((state) => {
             state.bookings = bookings;
@@ -35,11 +37,6 @@ export default function Dashboard({
         setShowBookingModal(true);
     };
 
-    const closeBookingModal = () => {
-        setSelectedTime("");
-        setShowBookingModal(false);
-    };
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -48,6 +45,7 @@ export default function Dashboard({
                     Bookings
                 </h2>
             }
+            cms={cms}
         >
             <Head title="Time Table" />
             <div className="w-full lg:w-1/2 mx-auto mt-6 sm:mt-0">

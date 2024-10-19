@@ -8,11 +8,13 @@ import { BlogPageType } from "@/types";
 export default function Pages({
     auth,
     pages,
+    cms
 }: PageProps<{ pages: BlogPageType[] }>) {
     const { t } = useLaravelReactI18n();
 
     return (
         <AuthenticatedLayout
+            cms={cms}
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

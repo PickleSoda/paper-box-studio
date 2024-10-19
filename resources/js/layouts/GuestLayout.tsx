@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { Link } from "@inertiajs/react";
-import { User } from "@/types";
+import { PageType, User } from "@/types";
 import { Footer } from "@/components/sections/footer";
 import { PackageOpen, Menu } from "lucide-react";
 import {
@@ -8,17 +8,14 @@ import {
     SheetContent,
     SheetFooter,
     SheetHeader,
-    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { ToggleTheme } from "@/components/ui/toggle-theme";
@@ -28,28 +25,7 @@ interface RouteProps {
     label: string;
 }
 
-const guestLinks: RouteProps[] = [
-    {
-        href: route("login"),
-        label: "Login",
-    },
-    {
-        href: route("register"),
-        label: "Register",
-    },
-];
-const userLinks: RouteProps[] = [
-    {
-        href: route("dashboard"),
-        label: "Dashboard",
-    },
-];
-
 const routeList: RouteProps[] = [
-    {
-        href: "#testimonials",
-        label: "Testimonials",
-    },
     {
         href: "#team",
         label: "Team",
@@ -58,16 +34,12 @@ const routeList: RouteProps[] = [
         href: "#contact",
         label: "Contact",
     },
-    {
-        href: "#faq",
-        label: "FAQ",
-    },
 ];
 
 export default function Guest({
-    user,
     children,
-}: PropsWithChildren<{ user?: User }>) {
+    cms,
+}: PropsWithChildren<{ user?: User; cms?: PageType[] }>) {
     const [isOpen, setIsOpen] = React.useState(false);
     return (
         <>
@@ -116,37 +88,17 @@ export default function Guest({
                                             <Link href={href}>{label}</Link>
                                         </Button>
                                     ))}
-                                    {!user
-                                        ? guestLinks.map(({ href, label }) => (
-                                              <Button
-                                                  key={href}
-                                                  onClick={() =>
-                                                      setIsOpen(false)
-                                                  }
-                                                  asChild
-                                                  variant="ghost"
-                                                  className="justify-start text-base"
-                                              >
-                                                  <Link href={href}>
-                                                      {label}
-                                                  </Link>
-                                              </Button>
-                                          ))
-                                        : userLinks.map(({ href, label }) => (
-                                              <Button
-                                                  key={href}
-                                                  onClick={() =>
-                                                      setIsOpen(false)
-                                                  }
-                                                  asChild
-                                                  variant="ghost"
-                                                  className="justify-start text-base"
-                                              >
-                                                  <Link href={href}>
-                                                      {label}
-                                                  </Link>
-                                              </Button>
-                                          ))}
+                                    {cms?.map(({ title, url }) => (
+                                        <Button
+                                            key={url}
+                                            onClick={() => setIsOpen(false)}
+                                            asChild
+                                            variant="ghost"
+                                            className="justify-start text-base"
+                                        >
+                                            <Link href={url}>{title}</Link>
+                                        </Button>
+                                    ))}
                                 </div>
                             </div>
 
@@ -173,27 +125,13 @@ export default function Guest({
                                     </Link>
                                 </NavigationMenuLink>
                             ))}
-                            {!user
-                                ? guestLinks.map(({ href, label }) => (
-                                      <NavigationMenuLink key={href} asChild>
-                                          <Link
-                                              className="text-base px-2"
-                                              href={href}
-                                          >
-                                              {label}
-                                          </Link>
-                                      </NavigationMenuLink>
-                                  ))
-                                : userLinks.map(({ href, label }) => (
-                                      <NavigationMenuLink key={href} asChild>
-                                          <Link
-                                              className="text-base px-2"
-                                              href={href}
-                                          >
-                                              {label}
-                                          </Link>
-                                      </NavigationMenuLink>
-                                  ))}
+                            {cms?.map(({ title, url }) => (
+                                <NavigationMenuLink key={url} asChild>
+                                    <Link href={url} className="text-base px-2">
+                                        {title}
+                                    </Link>
+                                </NavigationMenuLink>
+                            ))}
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
@@ -203,7 +141,7 @@ export default function Guest({
                 </div>
             </header>
             <div className="w-full m-0 p-0 -mt-14">{children}</div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/side-bar/app-sidebar";
-import { PageItem } from "@/types";
+import { PageType } from "@/types";
 import { Separator } from "@/components/ui/separator";
 import {
     SidebarInset,
@@ -13,7 +13,7 @@ import{
     LogOut,
 } from "lucide-react";
 
-const mainLinks: PageItem[] = [
+const mainLinks: PageType[] = [
   {
       title: "Dashboard",
       url: route("dashboard"),
@@ -22,13 +22,9 @@ const mainLinks: PageItem[] = [
       title: "Bookings",
       url: route("booking"),
   },
-  {
-      title: "Pages",
-      url: route("pages.index"),
-  },
 ];
 
-const secondaryLinks: PageItem[] = [
+const secondaryLinks: PageType[] = [
   {
     title: "Profile",
     url: route("profile.edit"),
@@ -39,7 +35,7 @@ const secondaryLinks: PageItem[] = [
 }
 ];
 
-const userLinks: PageItem[] = [
+const userLinks: PageType[] = [
   {
     title: "Profile",
     url: route("profile.edit"),
@@ -57,10 +53,12 @@ export default function AuthenticatedLayout({
     user,
     header,
     children,
-}: PropsWithChildren<{ user: User; header?: ReactNode }>) {
+    cms,
+}: PropsWithChildren<{ user: User; header?: ReactNode, cms: PageType[] }>) {
+    console.log(cms);
     return (
         <SidebarProvider>
-            <AppSidebar user={user} mainLinks={mainLinks} secondaryLinks={secondaryLinks} userLinks={userLinks} />
+            <AppSidebar user={user} mainLinks={mainLinks} cmsLinks={cms} secondaryLinks={secondaryLinks} userLinks={userLinks} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2">
                     <div className="flex items-center gap-2 px-4">

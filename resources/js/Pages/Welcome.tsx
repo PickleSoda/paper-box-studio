@@ -12,11 +12,10 @@ import { About } from "@/components/sections/about";
 
 export default function Welcome({
     auth,
-    laravelVersion,
-    phpVersion,
+    cms,
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
-        <Guest user={auth.user}>
+        <Guest user={auth.user} cms={cms}>
             <Head title="Welcome" />
             <img
                 id="background"

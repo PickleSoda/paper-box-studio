@@ -14,6 +14,7 @@ export type PageProps<
     auth: {
         user: User;
     };
+     cms: PageType[]
 };
 export interface Booking {
     id: number;
@@ -35,6 +36,7 @@ export type BlogPageType = {
 };
 
 type PageType = {
+    id?: number;
     title: string;
     url: string;
     icon?: LucideIcon;

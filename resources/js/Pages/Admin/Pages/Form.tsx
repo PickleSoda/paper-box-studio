@@ -15,6 +15,7 @@ export default function PageForm({
     page,
     parent,
     childPages,
+    cms,
 }: PageProps<{
     page?: BlogPageType;
     parent?: BlogPageType;
@@ -43,6 +44,7 @@ export default function PageForm({
 
     return (
         <AuthenticatedLayout
+            cms={cms}
             user={auth.user}
             header={
                 page?.id ? (
