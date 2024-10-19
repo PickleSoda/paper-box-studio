@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -16,10 +15,12 @@ class PageController extends Controller
         $this->pageService = $pageService;
     }
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        // Use the PageService to get pages with subpages
-        $pages = $this->pageService->getPagesWithSubpages();
+        $pages = $this->pageService->getParentPages();
 
         return Inertia::render('Admin/Pages/index', [
             'pages' => $pages
@@ -40,17 +41,18 @@ class PageController extends Controller
             'parent_id' => 'nullable|exists:pages,id', // Ensure the parent page exists
         ]);
 
-        // Create the new page
-        Page::create($validated);
+        $this->pageService->createPage($validated);
 
-        // Redirect to the pages index with a success message
         return redirect()->route('pages.index')->with('success', 'Page created successfully');
     }
 
+    /**
+     * Show the form for creating a new page under a parent.
+     */
     public function create(Request $request)
     {
         $pageId = $request->route('pageId');
-        $page = Page::findOrFail($pageId);
+        $page = $this->pageService->getPageWithChildren($pageId);
 
         return Inertia::render('Admin/Pages/Form', [
             'parent' => $page,
@@ -58,12 +60,12 @@ class PageController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource and its child pages for editing.
      */
     public function edit(Request $request)
     {
         $pageId = $request->route('pageId');
-        $page = Page::with('children')->findOrFail($pageId);
+        $page = $this->pageService->getPageWithChildren($pageId);
 
         return Inertia::render('Admin/Pages/Form', [
             'page' => $page,
@@ -89,9 +91,9 @@ class PageController extends Controller
             'parent_id' => 'nullable|exists:pages,id', // Ensure parent page exists
         ]);
 
-        $page->update($validated);
+        // Use the PageService to update the page
+        $this->pageService->updatePage($page, $validated);
 
-        // Redirect back to the pages list with a success message
         return back()->with('success', 'Page updated successfully');
     }
 
@@ -101,11 +103,8 @@ class PageController extends Controller
     public function destroy(Request $request)
     {
         $pageId = $request->route('pageId');
-        // Find the page and delete it
-        $page = Page::findOrFail($pageId);
-        $page->delete();
+        $this->pageService->deletePage($pageId);
 
-        // Redirect back to the pages list with a success message
         return back()->with('success', 'Page deleted successfully');
     }
 }
