@@ -55,7 +55,6 @@ export default function AuthenticatedLayout({
     children,
     cms,
 }: PropsWithChildren<{ user: User; header?: ReactNode, cms: PageType[] }>) {
-    console.log(cms);
     return (
         <SidebarProvider>
             <AppSidebar user={user} mainLinks={mainLinks} cmsLinks={cms} secondaryLinks={secondaryLinks} userLinks={userLinks} />

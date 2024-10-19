@@ -17,7 +17,6 @@ const DayTable: FC<DayTableProps> = ({ openModal = () => {} }) => {
 
     const handleHourClick = (time: string) => () => {
         openModal(time);
-        console.log(time);
     };
     const findBooking = (time: dayjs.Dayjs) => {
         const foundBooking = bookings.find((booking) =>

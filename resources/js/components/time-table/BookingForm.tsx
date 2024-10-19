@@ -91,7 +91,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
             post(route("booking.store"), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    console.log("onSuccess");
                     onClose();
                 },
             });
@@ -99,7 +98,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
             patch(route("booking.update", sendType.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    console.log("onSuccess");
                     onClose();
                 },
             });
@@ -110,7 +108,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
         destroy(route("booking.destroy", sendType.id), {
             preserveScroll: true,
             onSuccess: () => {
-                console.log("onSuccess");
                 onClose();
             },
         });

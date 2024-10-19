@@ -22,9 +22,6 @@ export default function PageForm({
     childPages?: BlogPageType[];
 }>) {
     const { t } = useLaravelReactI18n();
-    console.log(page);
-    console.log(parent);
-    console.log(childPages);
     const { data, setData, post, errors } = useForm({
         title: page?.title || "",
         description: page?.description || "",

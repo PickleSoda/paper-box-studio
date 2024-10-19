@@ -22,7 +22,6 @@ export default function Dashboard({
     cms,
     bookings,
 }: PageProps<{ bookings: Booking[] }>) {
-    console.log(cms);
     useEffect(() => {
         CalendarStore.update((state) => {
             state.bookings = bookings;
