@@ -71,6 +71,7 @@ export function NavUser({ user, links }: { links: PageType[]; user: User }) {
                                         <link.icon className="h-4 w-4 mr-2" />
                                     )}
                                     <Link
+                                        className="w-full"
                                         href={link.url}
                                         method={link?.method}
                                     >
@@ -78,8 +79,7 @@ export function NavUser({ user, links }: { links: PageType[]; user: User }) {
                                     </Link>
                                 </DropdownMenuItem>
                             ))}
-                            <DropdownMenuItem>
-                            </DropdownMenuItem>
+                            <DropdownMenuItem></DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>

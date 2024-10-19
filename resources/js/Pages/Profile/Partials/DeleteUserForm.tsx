@@ -1,14 +1,11 @@
 import { useRef, useState, FormEventHandler } from 'react';
-import DangerButton from '@/components/shared/DangerButton';
-import InputError from '@/components/shared/InputError';
-import InputLabel from '@/components/shared/InputLabel';
-import Modal from '@/components/shared/Modal';
-import SecondaryButton from '@/components/shared/SecondaryButton';
-import TextInput from '@/components/shared/TextInput';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { useForm } from '@inertiajs/react';
 
 export default function DeleteUserForm({ className = '' }: { className?: string }) {
-    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+    const [open, setOpen] = useState(false);
     const passwordInput = useRef<HTMLInputElement>(null);
 
     const {
@@ -23,12 +20,11 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
     });
 
     const confirmUserDeletion = () => {
-        setConfirmingUserDeletion(true);
+        setOpen(true);
     };
 
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
-
         destroy(route('profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
@@ -38,8 +34,7 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
     };
 
     const closeModal = () => {
-        setConfirmingUserDeletion(false);
-
+        setOpen(false);
         reset();
     };
 
@@ -47,53 +42,49 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
         <section className={`space-y-6 ${className}`}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Delete Account</h2>
-
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Once your account is deleted, all of its resources and data will be permanently deleted. Before
-                    deleting your account, please download any data or information that you wish to retain.
+                    Once your account is deleted, all of its resources and data will be permanently deleted.
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
+            <Button variant="destructive" onClick={confirmUserDeletion}>
+                Delete Account
+            </Button>
 
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Are you sure you want to delete your account?
-                    </h2>
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent>
+                    <form onSubmit={deleteUser}>
+                        <DialogTitle>Confirm Account Deletion</DialogTitle>
+                        <DialogDescription>
+                            This action is permanent. Please enter your password to confirm account deletion.
+                        </DialogDescription>
 
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                        enter your password to confirm you would like to permanently delete your account.
-                    </p>
+                        <div className="my-4">
+                            <Input
+                                id="password"
+                                type="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                placeholder="Password"
+                                required
+                            />
+                            {errors.password && (
+                                <p className="text-red-500 text-sm mt-2">{errors.password}</p>
+                            )}
+                        </div>
 
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
-
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
+                        <DialogFooter>
+                            <Button type="button" variant="outline" onClick={closeModal}>
+                                Cancel
+                            </Button>
+                            <Button type="submit" variant="destructive" disabled={processing}>
+                                Delete Account
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 }
