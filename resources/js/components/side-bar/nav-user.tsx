@@ -15,9 +15,9 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { User, PageItem } from "@/types";
+import { User, PageType } from "@/types";
 
-export function NavUser({ user, links }: { links: PageItem[]; user: User }) {
+export function NavUser({ user, links }: { links: PageType[]; user: User }) {
     const { isMobile } = useSidebar();
 
     return (

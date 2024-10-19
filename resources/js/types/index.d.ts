@@ -34,19 +34,11 @@ export type BlogPageType = {
     updated_at: string;
 };
 
-export type BlogPageListType = {
-    id: number;
-    title: string;
-    description: string;
-    is_visible: boolean;
-    subpages: BlogPageListType[];
-};
-
-type PageItem = {
+type PageType = {
     title: string;
     url: string;
     icon?: LucideIcon;
     isActive?: boolean;
     method?: Method;
-    items?: PageItem[];
+    items?: PageType[];
 };

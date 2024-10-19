@@ -15,9 +15,9 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { PageItem } from "@/types";
+import { PageType } from "@/types";
 
-export function NavMain({ items }: { items: PageItem[] }) {
+export function NavMain({ items }: { items: PageType[] }) {
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Platform</SidebarGroupLabel>

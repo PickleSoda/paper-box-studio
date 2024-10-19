@@ -12,7 +12,7 @@ import {
     Settings2,
     SquareTerminal,
 } from "lucide-react";
-import { PageItem } from "@/types";
+import { PageType } from "@/types";
 import { NavMain } from "@/components/side-bar/nav-main";
 import { NavProjects } from "@/components/side-bar/nav-projects";
 import { NavSecondary } from "@/components/side-bar/nav-secondary";
@@ -139,9 +139,9 @@ const data = {
 
 type SidebarProps = ComponentProps<typeof Sidebar> & {
     user: User;
-    mainLinks: PageItem[];
-    secondaryLinks: PageItem[];
-    userLinks: PageItem[];
+    mainLinks: PageType[];
+    secondaryLinks: PageType[];
+    userLinks: PageType[];
 };
 
 export function AppSidebar({ user, mainLinks, secondaryLinks, userLinks, ...props }: SidebarProps) {
